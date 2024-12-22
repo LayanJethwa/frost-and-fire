@@ -5,7 +5,7 @@ This is a platformer game, where you play as Frosty the Snowman, who has magical
 Collect all the keys to escape out of the yellow door, whilst dodging enemies and avoiding the lava! WASD for movement, and walk over things to interact with them. Good luck!  
 
 You can view the source in the Sprig editor here: https://sprig.hackclub.com/share/8VfFDZ55vpGKrwyrogqL  
-This is the link to play it: https://sprig-git-fork-layanjethwa-automated-pr-1734884068878.hackclub.dev/gallery/beta/Magic  
+This is the link to play it: [https://sprig-git-fork-layanjethwa-automated-pr-1734884068878.hackclub.dev/gallery/beta/Magic  ](https://sprig-git-fork-layanjethwa-automated-pr-1734886290760.hackclub.dev/gallery/beta/Frost-and-Fire)
 
 Screenshot of gameplay:
 
