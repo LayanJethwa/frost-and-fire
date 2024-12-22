@@ -1220,7 +1220,7 @@ LLLLLLLLLLLLLLLL`],
 111111111111L111`]
 );
 
-let level = 0
+let level = 2
 const levels = [
   map`
 mmmommmmmh
@@ -1652,13 +1652,13 @@ function pick_up_key(){
     inventory.push("W");
     let current_tile = getFirst(door_purple)
     clearTile(current_tile.x, current_tile.y);
-    addSprite(current_tile.x,current_tile.y,">");
+    addSprite(current_tile.x,current_tile.y,"E");
   } else if ( tilesWith(player, key_orange).length > 0) {
     getFirst(key_orange).remove();
     inventory.push("S");
     let current_tile = getFirst(door_orange)
     clearTile(current_tile.x, current_tile.y);
-    addSprite(current_tile.x,current_tile.y,">");
+    addSprite(current_tile.x,current_tile.y,"D");
   }
   if (inventory.length !== inventory_length) {
     inventory_length = inventory.length
@@ -1696,7 +1696,7 @@ function enter_door(){
 }
     
 
-setSolids([ player, wall, door, door_red, door_green, door_purple, door_orange, rock, stone_rock ]);
+setSolids([ player, wall, door, door_red, door_green, door_purple, door_orange, rock, stone_rock, door_block ]);
 
 onInput("d", () => {
   if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping)) {
