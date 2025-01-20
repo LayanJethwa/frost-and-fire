@@ -9,6 +9,19 @@ https://sprig.hackclub.com/gallery/getting_started
 */
 
 var isdead = false
+var haswon = false
+var exit = false
+var jumping = false
+var climbing = false
+var collided = false
+var landed = true
+
+var lava_tile
+var geyser_tile
+var inventory
+var inventory_length
+var movedirs
+var tile
 
 const platform = "m"
 const platform_l = "l"
@@ -1287,8 +1300,8 @@ function level_setup(level) {
     for (let i = 0; i < lives; i++) {
       addSprite(i,9,"#")
     }
-    getlava = getAll(lava)
-    getpool = getAll(lava_pool)
+    var getlava = getAll(lava)
+    var getpool = getAll(lava_pool)
     lava_tile = getlava.concat(getpool)
     geyser_tile = getFirst(geyser)
     inventory = []
@@ -1367,7 +1380,7 @@ function geyser_eruption_kill() {
 
 function geyser_erupt() {
   if (geyser_tile) {
-    kill_check = setInterval(geyser_eruption_kill, 10);
+    var kill_check = setInterval(geyser_eruption_kill, 10);
     geyser_on = true
     clearTile(geyser_tile.x, geyser_tile.y-1)
     addSprite(geyser_tile.x, geyser_tile.y-1, shoot_geyser)
@@ -1449,7 +1462,7 @@ function lava_kill(){
         if ((getFirst(player).x == lava_tile[i].x && getFirst(player).y == lava_tile[i].y-1)){
           setBackground(red)
           collided = true
-          lava_collision_index = i
+          var lava_collision_index = i
           if (getFirst(player)) {
             getFirst(player).remove()
           }
@@ -1739,6 +1752,47 @@ onInput("d", () => {
   }
 })
 
+onInput("l", () => {
+  if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping)) {
+    getFirst(player).x += 1
+    if (tilesWith(door_o, player).length > 0) {
+      enter_door()
+    } else if (tilesWith(door_red_o, player).length > 0) {
+      let tile = getFirst(door_red_o)
+      getFirst(door_red_o).remove()
+      addSprite(tile.x,tile.y,door_red_o2)
+      inventory = inventory.filter(function (item) {
+        return item !== '{';
+      });
+      getFirst(key_red).remove();
+    } else if (tilesWith(door_green_o, player).length > 0) {
+      let tile = getFirst(door_green_o)
+      getFirst(door_green_o).remove()
+      addSprite(tile.x,tile.y,door_green_o2)
+      inventory = inventory.filter(function (item) {
+        return item !== '}';
+      });
+      getFirst(key_green).remove();
+    } else if (tilesWith(door_purple_o, player).length > 0) {
+      let tile = getFirst(door_purple_o)
+      getFirst(door_purple_o).remove()
+      addSprite(tile.x,tile.y,door_purple_o2)
+      inventory = inventory.filter(function (item) {
+        return item !== 'W';
+      });
+      getFirst(key_purple).remove();
+    } else if (tilesWith(door_orange_o, player).length > 0) {
+      let tile = getFirst(door_orange_o)
+      getFirst(door_orange_o).remove()
+      addSprite(tile.x,tile.y,door_orange_o2)
+      inventory = inventory.filter(function (item) {
+        return item !== 'S';
+      });
+      getFirst(key_orange).remove();
+    }
+  }
+})
+
 onInput("a", () => {
   if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping)) {
     getFirst(player).x -= 1
@@ -1814,7 +1868,59 @@ onInput("w", () => {
   }
 })
 
+onInput("i", () => {
+  if ((!(isdead)) && (tilesWith(player).length == 1)  && !(climbing)) {
+    if ((tilesWith(ladder, player).length > 0) && !(jumping)){
+      climbing = true
+      landed = true
+      getFirst(player).y -= 1
+      jumping = false
+      setTimeout(() => {
+        jumping = false
+        climbing = false
+        getFirst(player).y -= 1
+      }, 100);
+    } else if (tilesWith(n_ladder, player).length > 0) {
+      jumping = false
+      climbing = true
+      landed = true
+      getFirst(player).y -= 1
+      climbing = false
+    }
+    else if ((getFirst(player).y %2 == 0) && !(jumping)){
+      getFirst(player).y -= 1
+      jumping = true
+      landed = false
+      climbing = false
+      setTimeout(() => {
+        if (!(landed)) {
+          getFirst(player).y += 1
+          jumping = false
+          landed = true
+          climbing = false
+        }
+      }, 400);
+    }
+  }
+})
+
 onInput("s", () => {
+  if ((!(isdead)) && (tilesWith(player).length == 1) && !(jumping) && !(climbing)) {
+    if (tilesWith(o_ladder, player).length > 0) {
+      climbing = true
+      landed = true
+      getFirst(player).y += 1
+      jumping = false
+      setTimeout(() => {
+        getFirst(player).y += 1
+        jumping = false
+        climbing = false
+      }, 100);
+    }
+  }
+})
+
+onInput("k", () => {
   if ((!(isdead)) && (tilesWith(player).length == 1) && !(jumping) && !(climbing)) {
     if (tilesWith(o_ladder, player).length > 0) {
       climbing = true
@@ -1837,5 +1943,40 @@ onInput("j", () => {
       level = 0
     }
     level_setup(level)
+  } else if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping)) {
+      getFirst(player).x -= 1
+      if (tilesWith(door_red_o, player).length > 0) {
+        let tile = getFirst(door_red_o)
+        getFirst(door_red_o).remove()
+        addSprite(tile.x,tile.y,door_red_o2)
+        inventory = inventory.filter(function (item) {
+          return item !== '{';
+        });
+        getFirst(key_red).remove();
+      } else if (tilesWith(door_green_o, player).length > 0) {
+        let tile = getFirst(door_green_o)
+        getFirst(door_green_o).remove()
+        addSprite(tile.x,tile.y,door_green_o2)
+        inventory = inventory.filter(function (item) {
+          return item !== '}';
+        });
+        getFirst(key_green).remove();
+      } else if (tilesWith(door_purple_o, player).length > 0) {
+        let tile = getFirst(door_purple_o)
+        getFirst(door_purple_o).remove()
+        addSprite(tile.x,tile.y,door_purple_o2)
+        inventory = inventory.filter(function (item) {
+          return item !== 'W';
+        });
+        getFirst(key_purple).remove();
+      } else if (tilesWith(door_orange_o, player).length > 0) {
+        let tile = getFirst(door_orange_o)
+        getFirst(door_orange_o).remove()
+        addSprite(tile.x,tile.y,door_orange_o2)
+        inventory = inventory.filter(function (item) {
+          return item !== 'S';
+        });
+        getFirst(key_orange).remove();
+      }
   }
 })
