@@ -9,7 +9,7 @@ This is a platformer game, where you play as Frosty the Snowman, who has magical
 
 Collect all the keys to escape out of the yellow door in the top right, whilst dodging enemies and avoiding the lava.
 
-Use the WASD keys for movement, and walk over things to interact with them.
+Use the WASD or IJKL keys for movement, and walk over things to interact with them.
 
 There are 4 levels to beat - can you do it?
 ## Demo
