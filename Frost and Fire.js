@@ -1598,7 +1598,7 @@ function win(){
 }
 
 
-let enemy_blocks = [wall,door,door_red,door_green,door_purple,door_orange,bridge,platform_geyser,platform_geyser2,platform_geyser3,shoot_geyser]
+let enemy_blocks = [wall,door,door_red,door_green,door_purple,door_orange,bridge,platform_geyser,platform_geyser2,platform_geyser3,shoot_geyser,shoot_geyser2,shoot_geyser_bridge]
 function move_enemies(){
   if (!(collided)) {
     let es = getAll(enemy);
@@ -1712,7 +1712,7 @@ function enter_door(){
 setSolids([ player, wall, door, door_red, door_green, door_purple, door_orange, rock, stone_rock, door_block ]);
 
 onInput("d", () => {
-  if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping)) {
+  if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping) && !(collided)) {
     getFirst(player).x += 1
     if (tilesWith(door_o, player).length > 0) {
       enter_door()
@@ -1753,7 +1753,7 @@ onInput("d", () => {
 })
 
 onInput("l", () => {
-  if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping)) {
+  if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping) && !(collided)) {
     getFirst(player).x += 1
     if (tilesWith(door_o, player).length > 0) {
       enter_door()
@@ -1794,7 +1794,7 @@ onInput("l", () => {
 })
 
 onInput("a", () => {
-  if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping)) {
+  if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping) && !(collided)) {
     getFirst(player).x -= 1
     if (tilesWith(door_red_o, player).length > 0) {
       let tile = getFirst(door_red_o)
@@ -1833,7 +1833,7 @@ onInput("a", () => {
 })
 
 onInput("w", () => {
-  if ((!(isdead)) && (tilesWith(player).length == 1)  && !(climbing)) {
+  if (!(isdead) && (tilesWith(player).length == 1)  && !(climbing) && !(collided)) {
     if ((tilesWith(ladder, player).length > 0) && !(jumping)){
       climbing = true
       landed = true
@@ -1869,7 +1869,7 @@ onInput("w", () => {
 })
 
 onInput("i", () => {
-  if ((!(isdead)) && (tilesWith(player).length == 1)  && !(climbing)) {
+  if ((!(isdead)) && (tilesWith(player).length == 1)  && !(climbing) && !(collided)) {
     if ((tilesWith(ladder, player).length > 0) && !(jumping)){
       climbing = true
       landed = true
@@ -1905,7 +1905,7 @@ onInput("i", () => {
 })
 
 onInput("s", () => {
-  if ((!(isdead)) && (tilesWith(player).length == 1) && !(jumping) && !(climbing)) {
+  if ((!(isdead)) && (tilesWith(player).length == 1) && !(jumping) && !(climbing) && !(collided)) {
     if (tilesWith(o_ladder, player).length > 0) {
       climbing = true
       landed = true
@@ -1921,7 +1921,7 @@ onInput("s", () => {
 })
 
 onInput("k", () => {
-  if ((!(isdead)) && (tilesWith(player).length == 1) && !(jumping) && !(climbing)) {
+  if ((!(isdead)) && (tilesWith(player).length == 1) && !(jumping) && !(climbing) && !(collided)) {
     if (tilesWith(o_ladder, player).length > 0) {
       climbing = true
       landed = true
@@ -1943,7 +1943,7 @@ onInput("j", () => {
       level = 0
     }
     level_setup(level)
-  } else if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping)) {
+  } else if ((!(isdead)) && (tilesWith(player).length == 1) && ((getFirst(player).y %2 == 0) || jumping) && !(collided)) {
       getFirst(player).x -= 1
       if (tilesWith(door_red_o, player).length > 0) {
         let tile = getFirst(door_red_o)
