@@ -1269,10 +1269,10 @@ moaw.wowma
 mamlzrammm
 1212g32312`,
   map`
-mmmommmomh
-564n5t4n64
-mol7rwmamo
-5n4:6t645n
+ommommmomh
+n64n5t4n64
+aol7rwmamo
+6n4:6t645n
 oamQmwl7ra
 n546546:45
 ammoLiR]mo
@@ -1330,7 +1330,7 @@ function level_setup(level) {
       addSprite(6,4,"}")
       addSprite(8,8,"W")
       addSprite(4,4,"k")
-      addSprite(6,2,"e")
+      addSprite(1,6,"e")
       addSprite(0,0,"e")
     }
     movedirs = Array.apply(null, Array(getAll(enemy).length)).map(Number.prototype.valueOf,-1)
@@ -1379,7 +1379,7 @@ function geyser_eruption_kill() {
 }
 
 function geyser_erupt() {
-  if (geyser_tile) {
+  if (geyser_tile && !(isdead) && !(collided)) {
     var kill_check = setInterval(geyser_eruption_kill, 10);
     geyser_on = true
     clearTile(geyser_tile.x, geyser_tile.y-1)
